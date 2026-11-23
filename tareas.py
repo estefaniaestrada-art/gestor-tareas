@@ -1,2 +1,2 @@
 def registrar(tareas, titulo):
-    return tareas
+    return tareas + [{"titulo": titulo.strip(), "hecha": False}]
