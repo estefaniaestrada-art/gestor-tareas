@@ -1,2 +1,5 @@
+def tarea_nueva(titulo):
+    return {"titulo": titulo.strip(), "hecha": False}
+
 def registrar(tareas, titulo):
-    return tareas + [{"titulo": titulo.strip(), "hecha": False}]
+    return tareas + [tarea_nueva(titulo)]
