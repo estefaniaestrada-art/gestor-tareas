@@ -1,51 +1,123 @@
 # Gestor de tareas por consola
 
-Proyecto de integración continua de Estefanía Estrada Pérez, Corporación Universitaria del Caribe (CECAR). Registra tareas pendientes y las guarda en un archivo JSON para consultarlas en otra sesión.
+**Proyecto de Integración Continua**  
+Estefanía Estrada Pérez  
+Corporación Universitaria del Caribe (CECAR)
 
-## Requisitos y ejecución
+## 1. Descripción del proyecto
 
-Se necesita Python 3.12 y Git para trabajar con el historial. La aplicación y las pruebas usan la biblioteca estándar.
+Gestor de tareas es una aplicación desarrollada en Python que permite registrar tareas pendientes y almacenarlas en un archivo JSON para consultarlas posteriormente.
 
-Desde la raíz del proyecto:
+El proyecto se desarrolló como caso práctico de integración continua, aplicando control de versiones con Git, desarrollo mediante ramas, pruebas automatizadas y GitHub Actions.
+
+## 2. Requisitos
+
+- Python 3.12 o superior.
+- Git.
+- Cuenta de GitHub para consultar el repositorio.
+
+## 3. Ejecución de la aplicación
+
+Desde la raíz del proyecto, se puede crear un entorno virtual:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python tareas.py --archivo ejemplo.json agregar "  Estudiar  "
+python -m venv .venv
+```
+
+En Windows:
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Para registrar una tarea:
+
+```bash
+python tareas.py --archivo ejemplo.json agregar "Estudiar"
+```
+
+Para consultar las tareas:
+
+```bash
 python tareas.py --archivo ejemplo.json listar
 ```
 
-La segunda orden imprime `[pendiente] Estudiar`. Omite `--archivo ejemplo.json` para usar `tareas.json`. El ejemplo crea datos locales. En Windows se puede invocar `.venv\Scripts\python.exe` directamente.
+La salida esperada para la tarea registrada es:
 
-## Verificación
+```text
+[pendiente] Estudiar
+```
+
+Si no se especifica el parámetro `--archivo`, la aplicación utiliza `tareas.json`.
+
+## 4. Verificación y pruebas
+
+Para comprobar la sintaxis del proyecto:
 
 ```bash
 python -m compileall -q tareas.py tests
+```
+
+Para ejecutar las pruebas automatizadas:
+
+```bash
 python -m unittest discover -s tests -v
 ```
 
-La suite incluye una prueba unitaria y tres pruebas funcionales de la interfaz. El flujo de GitHub Actions en `.github/workflows/ci.yml` repite estas verificaciones al publicar cambios y en las solicitudes dirigidas a `main`.
+La suite contiene cuatro pruebas: una prueba unitaria y tres pruebas funcionales de la interfaz.
 
-## Historial y evidencias
+**Resultado de la ejecución local: cuatro pruebas aprobadas.**
 
-El archivo `gestor-tareas.bundle` conserva las ramas y los commits locales. Desde la carpeta donde se extrajo el ZIP:
+## 5. Integración continua
 
-```bash
-git clone gestor-tareas.bundle gestor-tareas
-cd gestor-tareas
-git log --graph --all --oneline --decorate
-```
+El proyecto utiliza GitHub Actions mediante el archivo:
 
-Los commits `4a01737`, `667e5b1` y `9154238` corresponden a las fases roja, verde y de refactorización. Para repetirlas sin mover la rama principal, usa un worktree temporal para cada commit y ejecuta allí el descubrimiento de pruebas. La carpeta externa `evidencias/` contiene las salidas originales de la demostración local.
+`.github/workflows/ci.yml`
 
-## GitHub y entrega
+El flujo automatiza las siguientes actividades:
 
-Crea el repositorio del grupo en GitHub con la visibilidad que corresponda. Si Git creó un remoto `origin` al clonar el bundle, actualízalo y publica la rama principal. Las ramas originales de la demostración ya están integradas localmente. Para evidenciar una solicitud efectiva en GitHub, crea una rama nueva con una mejora real, abre una solicitud hacia `main` y espera la ejecución automática antes de integrar.
+1. Descarga del repositorio.
+2. Configuración de Python 3.12.
+3. Compilación del código.
+4. Ejecución de las pruebas automatizadas.
 
-```bash
-git remote set-url origin URL_REAL_DE_GITHUB
-git push -u origin main
-git push origin v0.1.0
-```
+El flujo se activa mediante eventos de publicación de cambios (`push`) y solicitudes de integración dirigidas a `main` (`pull_request`).
 
-En un repositorio privado, agrega a la docente como colaboradora. Incluye la URL real, la solicitud integrada y la ejecución de Actions en el anexo A del informe.
+Las ejecuciones publicadas en GitHub Actions finalizaron satisfactoriamente.
+
+## 6. Control de versiones
+
+Se utilizó Git para gestionar el historial del proyecto y organizar el desarrollo mediante las siguientes ramas:
+
+- `main`: rama principal del proyecto.
+- `feature/registro`: desarrollo de la funcionalidad de registro.
+- `feature/cli`: desarrollo de la interfaz de consola y pruebas funcionales.
+
+Se publicó la etiqueta de versión `v0.1.0`.
+
+El historial conserva los commits correspondientes al ciclo TDD:
+
+- Rojo: `4a01737`.
+- Verde: `667e5b1`.
+- Refactorización: `9154238`.
+
+Las funcionalidades desarrolladas en las ramas se integraron en la rama principal mediante merges registrados en el historial de Git.
+
+## 7. Repositorio
+
+Repositorio público:
+
+https://github.com/estefaniaestrada-art/gestor-tareas
+
+En el repositorio se encuentran el código fuente, las pruebas automatizadas, el archivo de configuración de GitHub Actions y el historial de versiones.
+
+## 8. Evidencias
+
+Las evidencias del proyecto incluyen:
+
+- Historial de commits y ramas.
+- Ejecución de pruebas unitarias y funcionales.
+- Ciclo TDD: rojo, verde y refactorización.
+- Ejecuciones exitosas de GitHub Actions.
+- Publicación de la etiqueta `v0.1.0`.
+
